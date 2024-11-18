@@ -12,7 +12,6 @@ CONFIG = {
         SPEED = 64,
         JUMPFORCE = 128,
         GRAVITY = 128
-        JUMPCOUNT
     },
     WORLD = {
         
