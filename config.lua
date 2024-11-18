@@ -19,6 +19,6 @@ CONFIG = {
         GRAVITY = 128
     },
     WORLD = {
-        
+        TILES = 32
     }
 }

@@ -10,6 +10,8 @@
                         By AKATSUKODE
 ]]
 
+bump = require("libs/bump")
+
 require("srcs/game")
 
 function love.load()
