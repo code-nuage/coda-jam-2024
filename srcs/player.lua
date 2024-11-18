@@ -102,7 +102,7 @@ end
 function Player:shoot()
     print("Shoot")
     -- Add shooting
-    BULLET:shoot(700,700, 4, 4)
+    BULLET.shoot(700,700, 4, 4)
 end
 
 --=====================================Player_Draw====================================================
