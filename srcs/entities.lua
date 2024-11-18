@@ -57,6 +57,10 @@ function BULLET:shoot(pos_x, pos_y, mode, facing)
         World.active.world:move(self, BULLET.pos_x+100, pos_y)
 
         local actualX, actualY, cols, len = World.active.world:check(self, BULLET.pos_x-CONFIG.JUSTABIT, pos_y)
+        if len >= 1 do
+            World.active.world:remove(self)
+            BULLET.alive = 0
+        end
     end
     
     --[[if mode == 1 do
