@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 LASER = {}
 
 Pressure_Plate = {}
@@ -45,12 +46,12 @@ function BULLET:shoot(pos_x, pos_y, mode, facing)
     BULLET.pos_y = pos_y
     BULLET.alive = 1
     
-    World.active.world:add(self, pos_x, pos_y, 4, 4)
+    World.active.world:add(self, pos_x+32, pos_y, 4, 4)
     
     while BULLET.alive == 1 do
         love.graphics.setColor(17, 153, 184)
         love.graphics.rectangle("fill", BULLET.pos_x, BULLET.pos_y, 4, 4)
-
+=$
         love.graphics.setColor(255, 255, 255)
         BULLET.pos_x=BULLET.pos_x+100
         World.active.world:move(self, BULLET.pos_x+100, pos_y)
@@ -77,3 +78,15 @@ function BULLET:shoot(pos_x, pos_y, mode, facing)
 end
 
 --BULLET_________________________________________________________________
+=======
+Bullet = {}
+Bullet.__index = Bullet
+
+function Bullet:new(x, y, dx, dy)
+    local instance = setmetatable({}, Player)
+    instance.x = x
+    instance.y = y
+    instance.dx = dx
+    instance.dy = dy
+end
+>>>>>>> 35b2e21d54bf24accdb29eca5f7a401690582a51

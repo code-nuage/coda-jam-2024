@@ -1,7 +1,7 @@
 Player = {}
 Player.__index = Player
 
-function Player:new(x, y, jump_count)
+function Player:new(type, x, y, jump_count)
     local instance = setmetatable({}, Player)
 
     instance.x = x
@@ -18,6 +18,8 @@ function Player:new(x, y, jump_count)
     instance.speed = CONFIG.PLAYER.SPEED
     instance.force = CONFIG.PLAYER.JUMPFORCE
     instance.gravity = CONFIG.PLAYER.GRAVITY
+    instance.shoot_direction_x = 0
+    instance.shoot_direction_y = 0
 
     World.active.world:add(instance, instance.x, instance.y, instance.w, instance.h)
     return instance
@@ -25,69 +27,77 @@ end
 
 function Player:update(dt)
     if love.keyboard.isDown(CONFIG.INPUTS.LEFT) then
-        self.dx = - self.speed
+        self.dx = -self.speed
     end
     if love.keyboard.isDown(CONFIG.INPUTS.RIGHT) then
         self.dx = self.speed
     end
 
-    self.y = self.y + self.dy * dt
-    self.dy = self.dy + self.gravity * dt
     if self.jump_count > 0 then
         if love.keyboard.isDown(CONFIG.INPUTS.JUMP) then
             self.dy = -self.force
             self.jump_count = self.jump_count - 1
         end
-        if love.keyboard.isDown(CONFIG.INPUTS.RIGHT) then
-            self.dx = self.x + 32 * dt
+    end
+
+    if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_TOP) then
+        self.shoot_direction_y = -1
+    else
+        self.shoot_direction_y = 0
+    end
+    if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
+        self.shoot_direction_x = -1
+    elseif love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_RIGHT) then
+        self.shoot_direction_x = 1
+    else
+        self.shoot_direction_x = 0
+    end
+
+    if self.shoot_direction_x ~= 0 or self.shoot_direction_y ~= 0 then
+        if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
+            print("Shoot")
         end
+    end
 
-    self.x = self.x + self.dx * dt
+    self.x, self.y = World.active.world:move(self, self.x + self.dx * dt, self.y + self.dy * dt)
 
-        self.y = self.y + self.dy * dt
+    if self:isGrounded() then
+        self.jump_count = self.jump_default
+        self.dy = 0
+    else
         self.dy = self.dy + self.gravity * dt
-        if self.jump_count > 0 then
-            if love.keyboard.isDown(CONFIG.INPUTS.JUMP) then
-                self.dy = -self.force
-                self.jump_count = self.jump_count - 1
-            end
-        end
-        --if cols > 1 then
-        --self.jump_count = self.jump_default
-        --end
+    end
+
+    if self:isTopped() then
+        self.dy = 10
     end
 
     self.dx = 0
 end
-function direction_shoot()
-    if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
-        return CONFIG.INPUTS.VIEW_SHOOT_LEFT
-    end 
-    if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_RIGHT) then
-        return CONFIG.INPUTS.VIEW_SHOOT_RIGHT
-    end 
-    if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_TOP) then
-        return CONFIG.INPUTS.VIEW_SHOOT_TOP
-    end 
+
+function Player:isGrounded()
+    local x, y, cols, len = World.active.world:check(self, self.x, self.y + CONFIG.JUSTABIT)
+
+    if len >= 1 then
+        return true
+    end
+end
+
+function Player:isTopped()
+    local x, y, cols, len = World.active.world:check(self, self.x, self.y - CONFIG.JUSTABIT)
+
+    if len >= 1 then
+        return true
+    end
+end
+
+function Player:shoot()
+    print("Shoot")
+    -- Add shooting
 end
 
 function Player:draw()
-    love.graphics.setColor(0, 255, 0)
+    love.graphics.setColor(1, 0, 1)
     love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
-    if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
-        if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
-            if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
-                love.graphics.setColor(255, 0, 0)
-                love.graphics.line(self.x, self.y, self.x - 100, self.y)
-            end
-            if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_RIGHT) then
-                love.graphics.setColor(255, 0, 0)
-                love.graphics.line(self.x, self.y, self.x + 100, self.y)
-            end
-            if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_TOP) then
-                love.graphics.setColor(255, 0, 0)
-                love.graphics.line(self.x, self.y, self.x, self.y - 100)
-            end
-        end
-    end
+    love.graphics.setColor(1,1,1)
 end

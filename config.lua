@@ -1,4 +1,5 @@
 CONFIG = {
+    JUSTABIT = 1e-10,
     INPUTS = {
         UP = "w",
         DOWN = "s",
@@ -15,8 +16,8 @@ CONFIG = {
         WIDTH = 32,
         HEIGHT = 32,
         SPEED = 64,
-        JUMPFORCE = 128,
-        GRAVITY = 128
+        JUMPFORCE = 210,
+        GRAVITY = 256
     },
     WORLD = {
         TILES = 32
