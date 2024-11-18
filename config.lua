@@ -9,8 +9,9 @@ CONFIG = {
         SHOOT = "e",
         VIEW_SHOOT_LEFT = "left",
         VIEW_SHOOT_RIGHT = "right",
-        VIEW_SHOOT_TOP= "up",
-        VIEW_SHOOT_DOWN= "down",
+        VIEW_SHOOT_TOP = "up",
+        VIEW_SHOOT_DOWN = "down",
+        SWITCH = "r"
     },
     PLAYER = {
         WIDTH = 32,
