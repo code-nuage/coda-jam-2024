@@ -11,7 +11,7 @@ BULLET.pos_y = 0
 BULLET.alive = 0
 
  -- _____________________________________________________________________
-function LASER:load(100, 100)
+function LASER:load(x, y)
     love.graphics.setColor(245, 125, 125)
     love.graphics.rectangle("fill", x+8, y, 4, 32)
     love.graphics.rectangle("fill", x+20, y, 4, 32)
@@ -21,9 +21,9 @@ function LASER:load(100, 100)
     love.graphics.setColor(255, 255, 255)
 end
 
-function Pressure_Plate:load(200, 200)
+function Pressure_Plate:load(x, y)
     love.graphics.setColor(230, 169, 2)
-    love.graphics.rectangle("fill", x+4, y-, 24, 6)
+    love.graphics.rectangle("fill", x+4, y-26, 24, 6)
 
     love.graphics.setColor(255, 255, 255)
 end
@@ -51,12 +51,16 @@ function BULLET:shoot(pos_x, pos_y, mode, facing)
     while BULLET.alive == 1 do
         love.graphics.setColor(17, 153, 184)
         love.graphics.rectangle("fill", BULLET.pos_x, BULLET.pos_y, 4, 4)
-=$
+
         love.graphics.setColor(255, 255, 255)
-        BULLET.pos_x=BULLET.pos_x+100
-        World.active.world:move(self, BULLET.pos_x+100, pos_y)
+        BULLET.pos_x=BULLET.pos_x+10
+        World.active.world:move(self, BULLET.pos_x+10, pos_y)
 
         local actualX, actualY, cols, len = World.active.world:check(self, BULLET.pos_x-CONFIG.JUSTABIT, pos_y)
+        if len >= 1 do
+            World.active.world:remove(self)
+            BULLET.alive = 0
+        end
     end
     
     --[[if mode == 1 do
