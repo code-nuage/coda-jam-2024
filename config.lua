@@ -8,7 +8,10 @@ CONFIG = {
     },
     PLAYER = {
         WIDTH = 32,
-        HEIGHT = 32
+        HEIGHT = 32,
+        SPEED = 64,
+        JUMPFORCE = 128,
+        GRAVITY = 128
     },
     WORLD = {
         
