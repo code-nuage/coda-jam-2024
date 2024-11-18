@@ -53,8 +53,8 @@ function BULLET:shoot(pos_x, pos_y, mode, facing)
         love.graphics.rectangle("fill", BULLET.pos_x, BULLET.pos_y, 4, 4)
 
         love.graphics.setColor(255, 255, 255)
-        BULLET.pos_x=BULLET.pos_x+100
-        World.active.world:move(self, BULLET.pos_x+100, pos_y)
+        BULLET.pos_x=BULLET.pos_x+10
+        World.active.world:move(self, BULLET.pos_x+10, pos_y)
 
         local actualX, actualY, cols, len = World.active.world:check(self, BULLET.pos_x-CONFIG.JUSTABIT, pos_y)
         if len >= 1 do
