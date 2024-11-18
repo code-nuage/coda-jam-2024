@@ -1,3 +1,4 @@
+require("CONFIG")
 Player = {}
 Player.__index = Player 
 function Player:new(x,y)
@@ -10,15 +11,16 @@ function Player:new(x,y)
 end
 
 function Player:update(dt)
-    if love.keyboard.isDown("s")then
-        self.y = self.y 32 * dt
+    if love.keyboard.isDown(CONFIG.INPUTS.LEFT)then
+        self.x = self.x - 32 * dt
     end
-    if love.keyboard.isDown("q")then
-        self.x = self.x -32 * dt
+    if love.keyboard.isDown(CONFIG.INPUTS.RIGHT)then
+        self.x = self.x + 32 * dt
     end
-    if love.keyboard.isDown("d")then
-        self.x = self.x 32 * dt
+    if love.keyboard.isDown(CONFIG.INPUTS.SPACE)then
+        self.y = self.y -32 * dt
     end
-    
-
 end
+function Player:draw()
+    love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+end 

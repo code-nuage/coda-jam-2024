@@ -3,7 +3,8 @@ CONFIG = {
         UP = "w",
         DOWN = "s",
         LEFT = "a",
-        RIGHT = "d"
+        RIGHT = "d",
+        JUMP = "space",
     },
     PLAYER = {
         WIDTH = 32,
