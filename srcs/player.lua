@@ -1,8 +1,14 @@
 Player = {}
 Player.__index = Player
 --=================================Player_New=====================================================
+<<<<<<< Updated upstream
 function Player:new(type,active_sprite, inactive_sprite, x, y, jump_count)
+=======
+function Player:new(type, active_sprite, inactive_sprite, x, y, jump_count)
+>>>>>>> Stashed changes
     local instance = setmetatable({}, Player)
+
+    instance.type = type
 
     instance.active_sprite = love.graphics.newImage(active_sprite)
     instance.inactive_sprite = love.graphics.newImage(inactive_sprite)
@@ -16,6 +22,7 @@ function Player:new(type,active_sprite, inactive_sprite, x, y, jump_count)
 
     instance.jump_default = jump_count
     instance.jump_count = jump_count
+    instance.has_jumped = false
     instance.speed = CONFIG.PLAYER.SPEED
     instance.force = CONFIG.PLAYER.JUMPFORCE
     instance.gravity = CONFIG.PLAYER.GRAVITY
@@ -38,27 +45,34 @@ function Player:update(dt)
 
         if self.jump_count > 0 then
             if love.keyboard.isDown(CONFIG.INPUTS.JUMP) then
-                self.dy = -self.force
-                self.jump_count = self.jump_count - 1
+                if love.keyboard.isDown(CONFIG.INPUTS.JUMP) and self.has_jumped == false then
+                    self.dy = -self.force
+                    self.jump_count = self.jump_count - 1
+                    self.has_jumped = true
+                end
+            else
+                self.has_jumped = false
             end
         end
 
-        if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_TOP) then
-            self.shoot_direction_y = -1
-        else
-            self.shoot_direction_y = 0
-        end
-        if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
-            self.shoot_direction_x = -1
-        elseif love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_RIGHT) then
-            self.shoot_direction_x = 1
-        else
-            self.shoot_direction_x = 0
-        end
+        if self.type == "HUMAN" then
+            if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_TOP) then
+                self.shoot_direction_y = -1
+            else
+                self.shoot_direction_y = 0
+            end
+            if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
+                self.shoot_direction_x = -1
+            elseif love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_RIGHT) then
+                self.shoot_direction_x = 1
+            else
+                self.shoot_direction_x = 0
+            end
 
-        if self.shoot_direction_x ~= 0 or self.shoot_direction_y ~= 0 then
-            if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
-                print("Shoot")
+            if self.shoot_direction_x ~= 0 or self.shoot_direction_y ~= 0 then
+                if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
+                    print("Shoot")
+                end
             end
         end
     end
@@ -68,6 +82,7 @@ function Player:update(dt)
     if self:isGrounded() then
         self.jump_count = self.jump_default
         self.dy = 0
+        self.has_jumped = false
     else
         self.dy = self.dy + self.gravity * dt
     end
@@ -105,6 +120,7 @@ end
 
 --=====================================Player_Draw====================================================
 function Player:draw()
+    love.graphics.rectangle("fill", self.x + self.w / 2 + 50 * self.shoot_direction_x, self.y + self.h / 2 + 50 * self.shoot_direction_y, 5, 5)
     if self.status == true then
         love.graphics.draw(self.active_sprite, self.x, self.y, 0, 2, 2)
     else
@@ -122,4 +138,8 @@ function love.keypressed(key)
         HUMAN:activate()
         ROBOT:activate()
     end
+end
+function Player:is_dead()
+    
+    
 end
