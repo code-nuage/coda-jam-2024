@@ -22,11 +22,6 @@ function Player:new(x, y, jump_count)
 end
 
 function Player:update(dt)
-<<<<<<< HEAD
-    if not love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
-        if love.keyboard.isDown(CONFIG.INPUTS.LEFT) then
-            self.dx = self.x - 32 * dt
-=======
     if love.keyboard.isDown(CONFIG.INPUTS.LEFT) then
         self.dx = self.x - 32 * dt
     end
@@ -40,7 +35,6 @@ function Player:update(dt)
         if love.keyboard.isDown(CONFIG.INPUTS.JUMP) then
             self.dy = -self.force
             self.jump_count = self.jump_count - 1
->>>>>>> 1879d6f70fe7931294bfbdcf465fb5823d4f49e9
         end
         if love.keyboard.isDown(CONFIG.INPUTS.RIGHT) then
             self.dx = self.x + 32 * dt
@@ -59,7 +53,6 @@ function Player:update(dt)
         --self.jump_count = self.jump_default
         --end
     end
-<<<<<<< HEAD
 end
 function direction_shoot()
     if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
@@ -71,15 +64,6 @@ function direction_shoot()
     if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_TOP) then
         return CONFIG.INPUTS.VIEW_SHOOT_TOP
     end 
-=======
-
-
-    local x, y, cols, len = World.active.world:move(self, self.x + self.dx * dt, self.y + self.dy * dt)
-    if len > 1 then
-        self.jump_count = self.jump_default
-        self.dy = 0
-    end
->>>>>>> 1879d6f70fe7931294bfbdcf465fb5823d4f49e9
 end
 
 function Player:draw()
