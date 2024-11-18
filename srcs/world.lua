@@ -11,7 +11,7 @@ function World:new(map)
     for y = 1, #map do
         for x = 1, #map[y] do
             local block = {x, y}
-            instance.map[y][x] = map[y][x]
+
             if map[y][x] ~= 0 then
                 instance.world:add(block, x * CONFIG.WORLD.TILES, y * CONFIG.WORLD.TILES, CONFIG.WORLD.TILES, CONFIG.WORLD.TILES)
             end
