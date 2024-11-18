@@ -5,5 +5,11 @@ CONFIG = {
         LEFT = "a",
         RIGHT = "d"
     },
-    
+    PLAYER = {
+        WIDTH = 32,
+        HEIGHT = 32
+    },
+    WORLD = {
+        
+    }
 }
