@@ -3,8 +3,8 @@ require("config")
 GAME = {}
 
 function GAME:load()
-    HUMAIN = Player:new(100,100)
-    ROBOT = Player:new(200, 200)
+    HUMAIN = Player:new(100,100,1)
+    ROBOT = Player:new(200, 200,2)
 end
 
 function GAME:update(dt)
