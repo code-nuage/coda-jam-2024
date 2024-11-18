@@ -94,6 +94,7 @@ end
 function Player:shoot()
     print("Shoot")
     -- Add shooting
+    BULLET:shoot(300,300, 4, 4)
 end
 
 function Player:draw()
