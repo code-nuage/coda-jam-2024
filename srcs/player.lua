@@ -38,19 +38,56 @@ function Player:update(dt)
             self.dy = -self.force
             self.jump_count = self.jump_count - 1
         end
-    end
+        if love.keyboard.isDown(CONFIG.INPUTS.RIGHT) then
+            self.dx = self.x + 32 * dt
+        end
 
     self.x = self.x + self.dx * dt
 
-    local x, y, cols, len = World.active.world:move(self, self.x + self.dx * dt, self.y + self.dy * dt)
-    if len > 1 then
-        self.jump_count = self.jump_default
-        self.dy = 0
+        self.y = self.y + self.dy * dt
+        self.dy = self.dy + self.gravity * dt
+        if self.jump_count > 0 then
+            if love.keyboard.isDown(CONFIG.INPUTS.JUMP) then
+                self.dy = -self.force
+                self.jump_count = self.jump_count - 1
+            end
+        end
+        --if cols > 1 then
+        --self.jump_count = self.jump_default
+        --end
     end
 
     self.dx = 0
 end
+function direction_shoot()
+    if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
+        return CONFIG.INPUTS.VIEW_SHOOT_LEFT
+    end 
+    if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_RIGHT) then
+        return CONFIG.INPUTS.VIEW_SHOOT_RIGHT
+    end 
+    if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_TOP) then
+        return CONFIG.INPUTS.VIEW_SHOOT_TOP
+    end 
+end
 
 function Player:draw()
+    love.graphics.setColor(0, 255, 0)
     love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+    if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
+        if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
+            if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
+                love.graphics.setColor(255, 0, 0)
+                love.graphics.line(self.x, self.y, self.x - 100, self.y)
+            end
+            if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_RIGHT) then
+                love.graphics.setColor(255, 0, 0)
+                love.graphics.line(self.x, self.y, self.x + 100, self.y)
+            end
+            if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_TOP) then
+                love.graphics.setColor(255, 0, 0)
+                love.graphics.line(self.x, self.y, self.x, self.y - 100)
+            end
+        end
+    end
 end
