@@ -1,19 +1,16 @@
 Player = {}
 Player.__index = Player
 --=================================Player_New=====================================================
-function Player:new(active_sprite, inactive_sprite, x, y, jump_count)
+function Player:new(type,active_sprite, inactive_sprite, x, y, jump_count)
     local instance = setmetatable({}, Player)
 
     instance.active_sprite = love.graphics.newImage(active_sprite)
     instance.inactive_sprite = love.graphics.newImage(inactive_sprite)
-
     instance.x = x
     instance.y = y
-
     instance.dy = 0
     instance.dx = 0
     instance.status = true
-
     instance.w = CONFIG.PLAYER.WIDTH
     instance.h = CONFIG.PLAYER.HEIGHT
 
