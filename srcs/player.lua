@@ -1,4 +1,3 @@
-require("CONFIG")
 Player = {}
 Player.__index = Player 
 function Player:new(x,y)
@@ -17,7 +16,7 @@ function Player:update(dt)
     if love.keyboard.isDown(CONFIG.INPUTS.RIGHT)then
         self.x = self.x + 32 * dt
     end
-    if love.keyboard.isDown(CONFIG.INPUTS.SPACE)then
+    if love.keyboard.isDown(CONFIG.INPUTS.JUMP)then
         self.y = self.y -32 * dt
     end
 end

@@ -1,8 +1,15 @@
 require("srcs/player")
-function GAME.load()
-    
+require("config")
+GAME = {}
+
+function GAME:load()
+    HUMAIN = Player:new(100,100)
 end
-function GAME.update(dt)
-    HUMAIN = Player.new(x,y)
+
+function GAME:update(dt)
+    HUMAIN:update(dt)
 end
-function GAME.draw()
+
+function GAME:draw()
+    HUMAIN:draw()
+end
