@@ -14,11 +14,8 @@ function GAME:load()
 end
 
 function GAME:update(dt)
-    if HUMAN.status == true then
-        HUMAN:update(dt)
-    elseif HUMAN.status == false then
-        ROBOT:update(dt)
-    end
+    HUMAN:update(dt)
+    ROBOT:update(dt)
 end
 
 function GAME:draw()

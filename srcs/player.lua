@@ -30,36 +30,38 @@ end
 
 --===========================================Player_Update=========================================
 function Player:update(dt)
-    if love.keyboard.isDown(CONFIG.INPUTS.LEFT) then
-        self.dx = -self.speed
-    end
-    if love.keyboard.isDown(CONFIG.INPUTS.RIGHT) then
-        self.dx = self.speed
-    end
-
-    if self.jump_count > 0 then
-        if love.keyboard.isDown(CONFIG.INPUTS.JUMP) then
-            self.dy = -self.force
-            self.jump_count = self.jump_count - 1
+    if self.status == true then
+        if love.keyboard.isDown(CONFIG.INPUTS.LEFT) then
+            self.dx = -self.speed
         end
-    end
+        if love.keyboard.isDown(CONFIG.INPUTS.RIGHT) then
+            self.dx = self.speed
+        end
 
-    if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_TOP) then
-        self.shoot_direction_y = -1
-    else
-        self.shoot_direction_y = 0
-    end
-    if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
-        self.shoot_direction_x = -1
-    elseif love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_RIGHT) then
-        self.shoot_direction_x = 1
-    else
-        self.shoot_direction_x = 0
-    end
+        if self.jump_count > 0 then
+            if love.keyboard.isDown(CONFIG.INPUTS.JUMP) then
+                self.dy = -self.force
+                self.jump_count = self.jump_count - 1
+            end
+        end
 
-    if self.shoot_direction_x ~= 0 or self.shoot_direction_y ~= 0 then
-        if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
-            print("Shoot")
+        if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_TOP) then
+            self.shoot_direction_y = -1
+        else
+            self.shoot_direction_y = 0
+        end
+        if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
+            self.shoot_direction_x = -1
+        elseif love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_RIGHT) then
+            self.shoot_direction_x = 1
+        else
+            self.shoot_direction_x = 0
+        end
+
+        if self.shoot_direction_x ~= 0 or self.shoot_direction_y ~= 0 then
+            if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
+                print("Shoot")
+            end
         end
     end
     --================================colision=============================================================
