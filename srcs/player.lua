@@ -1,7 +1,7 @@
 Player = {}
 Player.__index = Player
 
-function Player:new(x, y, jump_count)
+function Player:new(type, x, y, jump_count)
     local instance = setmetatable({}, Player)
 
     instance.x = x
@@ -68,11 +68,15 @@ function Player:update(dt)
         self.dy = self.dy + self.gravity * dt
     end
 
+    if self:isTopped() then
+        self.dy = 10
+    end
+
     self.dx = 0
 end
 
 function Player:isGrounded()
-    local x, y, cols, len = World.active.world:check(self, self.x, self.y + self.h + CONFIG.JUSTABIT)
+    local x, y, cols, len = World.active.world:check(self, self.x, self.y + CONFIG.JUSTABIT)
 
     if len >= 1 then
         return true

@@ -16,8 +16,8 @@ CONFIG = {
         WIDTH = 32,
         HEIGHT = 32,
         SPEED = 64,
-        JUMPFORCE = 128,
-        GRAVITY = 128
+        JUMPFORCE = 210,
+        GRAVITY = 256
     },
     WORLD = {
         TILES = 32
