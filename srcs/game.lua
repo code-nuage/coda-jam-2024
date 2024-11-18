@@ -8,8 +8,8 @@ GAME = {}
 function GAME:load()
     TUTORIAL = World:new(MAPS.TUTORIAL)
     TUTORIAL:switch()
-    HUMAN = Player:new(100, 100, 1)
-    ROBOT = Player:new(200, 200, 2)
+    HUMAN = Player:new(CONFIG.HUMAN.ACTIVE_SPRITE, CONFIG.HUMAN.INACTIVE_SPRITE, 100, 100, 1)
+    ROBOT = Player:new(CONFIG.ROBOT.ACTIVE_SPRITE, CONFIG.ROBOT.INACTIVE_SPRITE, 200, 200, 2)
     ROBOT:activate()
 end
 

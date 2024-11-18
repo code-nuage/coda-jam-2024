@@ -1,5 +1,5 @@
 --[[
-        __  __                                            
+         __  __                                            
         |  \/  |                                           
         | \  / | ___  __ _  __ _ ___  ___  _ __ ___   __ _ 
         | |\/| |/ _ \/ _` |/ _` / __|/ _ \| '_ ` _ \ / _` |
@@ -11,6 +11,8 @@
 ]]
 
 bump = require("libs/bump")
+
+love.graphics.setDefaultFilter("nearest", "nearest")
 
 require("srcs/game")
 

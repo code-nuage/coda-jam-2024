@@ -1,8 +1,11 @@
 Player = {}
 Player.__index = Player
 --=================================Player_New=====================================================
-function Player:new(x, y, jump_count)
+function Player:new(active_sprite, inactive_sprite, x, y, jump_count)
     local instance = setmetatable({}, Player)
+
+    instance.active_sprite = love.graphics.newImage(active_sprite)
+    instance.inactive_sprite = love.graphics.newImage(inactive_sprite)
 
     instance.x = x
     instance.y = y
@@ -10,8 +13,6 @@ function Player:new(x, y, jump_count)
     instance.dy = 0
     instance.dx = 0
     instance.status = true
-
-
 
     instance.w = CONFIG.PLAYER.WIDTH
     instance.h = CONFIG.PLAYER.HEIGHT
@@ -106,9 +107,11 @@ end
 
 --=====================================Player_Draw====================================================
 function Player:draw()
-    love.graphics.setColor(1, 0, 1)
-    love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
-    love.graphics.setColor(1, 1, 1)
+    if self.status == true then
+        love.graphics.draw(self.active_sprite, self.x, self.y, 0, 2, 2)
+    else
+        love.graphics.draw(self.inactive_sprite, self.x, self.y, 0, 2, 2)
+    end
 end
 
 --=====================================Player_switch==========================================

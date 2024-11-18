@@ -20,6 +20,14 @@ CONFIG = {
         JUMPFORCE = 210,
         GRAVITY = 256
     },
+    HUMAN = {
+        ACTIVE_SPRITE = "assets/human/active-idle.png",
+        INACTIVE_SPRITE = "assets/human/inactive-idle.png"
+    },
+    ROBOT = {
+        ACTIVE_SPRITE = "assets/robot/active-idle.png",
+        INACTIVE_SPRITE = "assets/robot/inactive-idle.png"
+    },
     WORLD = {
         TILES = 32
     }
