@@ -14,9 +14,11 @@ end
 
 function GAME:update(dt)
     HUMAN:update(dt)
+    ROBOT:update(dt)
 end
 
 function GAME:draw()
     HUMAN:draw()
+    ROBOT:draw()
     TUTORIAL.active:draw()
 end
