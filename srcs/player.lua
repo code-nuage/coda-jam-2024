@@ -1,7 +1,7 @@
 Player = {}
 Player.__index = Player
-
-function Player:new(type, x, y, jump_count)
+--=================================Player_New=====================================================
+function Player:new(x, y, jump_count)
     local instance = setmetatable({}, Player)
 
     instance.x = x
@@ -9,6 +9,9 @@ function Player:new(type, x, y, jump_count)
 
     instance.dy = 0
     instance.dx = 0
+    instance.status = true
+
+
 
     instance.w = CONFIG.PLAYER.WIDTH
     instance.h = CONFIG.PLAYER.HEIGHT
@@ -25,6 +28,7 @@ function Player:new(type, x, y, jump_count)
     return instance
 end
 
+--===========================================Player_Update=========================================
 function Player:update(dt)
     if love.keyboard.isDown(CONFIG.INPUTS.LEFT) then
         self.dx = -self.speed
@@ -58,7 +62,7 @@ function Player:update(dt)
             print("Shoot")
         end
     end
-
+    --================================colision=============================================================
     self.x, self.y = World.active.world:move(self, self.x + self.dx * dt, self.y + self.dy * dt)
 
     if self:isGrounded() then
@@ -83,6 +87,7 @@ function Player:isGrounded()
     end
 end
 
+--====================================Player_Topped======================================================
 function Player:isTopped()
     local x, y, cols, len = World.active.world:check(self, self.x, self.y - CONFIG.JUSTABIT)
 
@@ -91,13 +96,27 @@ function Player:isTopped()
     end
 end
 
+--====================================Player_Shoot=================================================
 function Player:shoot()
     print("Shoot")
     -- Add shooting
 end
 
+--=====================================Player_Draw====================================================
 function Player:draw()
     love.graphics.setColor(1, 0, 1)
     love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
-    love.graphics.setColor(1,1,1)
+    love.graphics.setColor(1, 1, 1)
+end
+
+--=====================================Player_switch==========================================
+function Player:activate()
+    self.status = not self.status
+end
+
+function love.keypressed(key)
+    if key == CONFIG.INPUTS.SWITCH then
+        HUMAN:activate()
+        ROBOT:activate()
+    end
 end
