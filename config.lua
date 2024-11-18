@@ -1,4 +1,5 @@
 CONFIG = {
+    JUSTABIT = 1e-10,
     INPUTS = {
         UP = "w",
         DOWN = "s",

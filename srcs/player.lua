@@ -24,41 +24,44 @@ function Player:new(x, y, jump_count)
 end
 
 function Player:update(dt)
-    if love.keyboard.isDown(CONFIG.INPUTS.LEFT) then
-        self.dx = - self.speed
-    end
-    if love.keyboard.isDown(CONFIG.INPUTS.RIGHT) then
-        self.dx = self.speed
-    end
-
-    self.y = self.y + self.dy * dt
-    self.dy = self.dy + self.gravity * dt
-    if self.jump_count > 0 then
-        if love.keyboard.isDown(CONFIG.INPUTS.JUMP) then
-            self.dy = -self.force
-            self.jump_count = self.jump_count - 1
+    if not love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
+            
+        if love.keyboard.isDown(CONFIG.INPUTS.LEFT) then
+            self.dx = - self.speed
         end
         if love.keyboard.isDown(CONFIG.INPUTS.RIGHT) then
-            self.dx = self.x + 32 * dt
+            self.dx = self.speed
         end
 
-    self.x = self.x + self.dx * dt
-
-        self.y = self.y + self.dy * dt
-        self.dy = self.dy + self.gravity * dt
         if self.jump_count > 0 then
             if love.keyboard.isDown(CONFIG.INPUTS.JUMP) then
                 self.dy = -self.force
                 self.jump_count = self.jump_count - 1
             end
         end
-        --if cols > 1 then
-        --self.jump_count = self.jump_default
-        --end
+    end
+    
+
+    self.x, self.y = World.active.world:move(self, self.x + self.dx * dt, self.y + self.dy * dt)
+
+    if self:isGrounded() then
+        self.jump_count = self.jump_default
+        self.dy = 0
+    else
+        self.dy = self.dy + self.gravity * dt
     end
 
     self.dx = 0
 end
+
+function Player:isGrounded()
+    local x, y, cols, len = World.active.world:check(self, self.x, self.y + self.h + CONFIG.JUSTABIT)
+    
+    if len >= 1 then
+        return true
+    end
+end
+
 function direction_shoot()
     if love.keyboard.isDown(CONFIG.INPUTS.VIEW_SHOOT_LEFT) then
         return CONFIG.INPUTS.VIEW_SHOOT_LEFT
