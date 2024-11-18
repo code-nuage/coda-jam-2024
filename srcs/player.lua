@@ -3,6 +3,7 @@ Player.__index = Player
 
 function Player:new(x, y, jump_count)
     local instance = setmetatable({}, Player)
+
     instance.x = x
     instance.y = y
 
@@ -16,6 +17,7 @@ function Player:new(x, y, jump_count)
     instance.w = CONFIG.PLAYER.WIDTH
     instance.h = CONFIG.PLAYER.HEIGHT
 
+    World.active.world:add(instance, instance.x, instance.y, instance.w, instance.h)
     return instance
 end
 
@@ -27,7 +29,6 @@ function Player:update(dt)
         self.dx = self.x + 32 * dt
     end
 
-
     self.y = self.y + self.dy * dt
     self.dy = self.dy + self.gravity * dt
     if self.jump_count > 0 then
@@ -36,8 +37,12 @@ function Player:update(dt)
             self.jump_count = self.jump_count - 1
         end
     end
-    if cols > 1 then
+
+
+    local x, y, cols, len = World.active.world:move(self, self.x + self.dx * dt, self.y + self.dy * dt)
+    if len > 1 then
         self.jump_count = self.jump_default
+        self.dy = 0
     end
 end
 
