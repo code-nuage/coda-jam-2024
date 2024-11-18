@@ -18,7 +18,7 @@ CONFIG = {
         HEIGHT = 32,
         SPEED = 64,
         JUMPFORCE = 210,
-        GRAVITY = 256
+        GRAVITY = 256,
     },
     HUMAN = {
         ACTIVE_SPRITE = "assets/human/active-idle.png",
@@ -29,6 +29,9 @@ CONFIG = {
         INACTIVE_SPRITE = "assets/robot/inactive-idle.png"
     },
     WORLD = {
-        TILES = 32
+        TILES = 32,
+    },
+    BULLET = {
+        SPEED = 96,
     }
 }

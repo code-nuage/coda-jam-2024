@@ -1,11 +1,9 @@
 Player = {}
+Bullet = {}
+Bullet.__index = Bullet
 Player.__index = Player
 --=================================Player_New=====================================================
-<<<<<<< Updated upstream
-function Player:new(type,active_sprite, inactive_sprite, x, y, jump_count)
-=======
 function Player:new(type, active_sprite, inactive_sprite, x, y, jump_count)
->>>>>>> Stashed changes
     local instance = setmetatable({}, Player)
 
     instance.type = type
@@ -32,7 +30,29 @@ function Player:new(type, active_sprite, inactive_sprite, x, y, jump_count)
     World.active.world:add(instance, instance.x, instance.y, instance.w, instance.h)
     return instance
 end
-
+--==============================Bullet_new===================================================
+function Bullet:new()
+    local instance = setmetatable({}, Bullet)
+    instance.x=(Player.shoot_direction_x)
+    instance.y=(Player.shoot_direction_y)
+    instance.dx=0
+    instance.dy=0
+    return instance
+end
+function Bullet:update(dt)
+    if self.x == 0 then
+        self.dx = self.speed
+    end
+    if self.x == -1 then
+        self.dx = -self.speed
+    end
+    if self.y == 0 then
+        self.dy = self.speed
+    end
+    if self.y == -1 then
+        self.dy = -self.speed
+    end
+end
 --===========================================Player_Update=========================================
 function Player:update(dt)
     if self.status == true then
@@ -112,21 +132,23 @@ function Player:isTopped()
 end
 
 --====================================Player_Shoot=================================================
-function Player:shoot()
-    print("Shoot")
-    -- Add shooting
-    BULLET.shoot(700,700, 4, 4)
+function Player:shoot(dt)
+    --if love.keyboard.isDown(CONTROL.INPUTS.SHOOT) then
 end
-
 --=====================================Player_Draw====================================================
 function Player:draw()
-    love.graphics.rectangle("fill", self.x + self.w / 2 + 50 * self.shoot_direction_x, self.y + self.h / 2 + 50 * self.shoot_direction_y, 5, 5)
+    love.graphics.rectangle("fill", self.x + self.w / 2 + 50 * self.shoot_direction_x,
+        self.y + self.h / 2 + 50 * self.shoot_direction_y, 5, 5)
     if self.status == true then
         love.graphics.draw(self.active_sprite, self.x, self.y, 0, 2, 2)
     else
         love.graphics.draw(self.inactive_sprite, self.x, self.y, 0, 2, 2)
     end
 end
+--[[function Bullet:draw()
+    love.graphics.rectangle("fill",Player.x + Player.y /2 +75* Player.shoot_direction_x,
+        Player.y + Player.h / 2 + 75 * Player.shoot_direction_y, 5, 5)
+end]]
 
 --=====================================Player_switch==========================================
 function Player:activate()
@@ -139,7 +161,7 @@ function love.keypressed(key)
         ROBOT:activate()
     end
 end
+
 function Player:is_dead()
-    
-    
+
 end
