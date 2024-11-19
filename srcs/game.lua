@@ -5,7 +5,17 @@ require("srcs/entities")
 require("srcs/maps")
 require("srcs/player")
 require("srcs/ui")
+Background = {}
+local fond = love.graphics.newImage("assets/background/usine_bg.png")
+function Background:load()
+    love.window.setMode(1280, 720)
+end
 
+
+function Background:draw()
+    
+    love.graphics.draw(fond, 0, 0, 0, 1280 / fond:getWidth(), 720 / fond:getHeight())
+end
 GAME = {}
 
 function GAME:load()
@@ -24,9 +34,7 @@ function GAME:update(dt)
 end
 
 function GAME:draw()
-    love.graphics.setColor(0.8, 0.8, 0.8)
-    love.graphics.rectangle("fill", 0, 0, 1280, 720)
-    love.graphics.setColor(1, 1, 1)
+    Background:draw()
     HUMAN:draw()
     ROBOT:draw()
     TUTORIAL.active:draw()
