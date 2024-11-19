@@ -1,3 +1,5 @@
+Bullet = {}
+BULLETS = {}
 Spike = {}
 Laser = {}
 Closed_door = {}
@@ -6,6 +8,7 @@ Pressure_plate = {}
 Beacon_tp = {}
 Portal_finish = {}
 
+Bullet.__index = Bullet
 Pressure_plate.__index = Pressure_plate
 Beacon_tp.__index = Beacon_tp
 Portal_finish.__index = Portal_finish
@@ -14,6 +17,39 @@ Spike.__index = Spike
 Laser.__index = Laser
 Closed_door.__index = Closed_door
 Portal_finish.__index = Portal_finish
+--===================BULLET===============================================
+
+function Bullet:new(x, y, dx, dy)
+    local instance = setmetatable({}, Bullet)
+    instance.x = x
+    instance.y = y
+    instance.speed = CONFIG.BULLET.SPEED
+    instance.dx = dx
+    instance.dy = dy
+    return instance
+end
+
+function Bullet:update(dt)
+    self.x = self.x + self.dx * self.speed * dt
+    self.y = self.y + self.dy * self.speed * dt
+end
+
+function Bullet:draw()
+    love.graphics.rectangle("fill", self.x, self.y, 4, 4)
+end
+
+function BULLETS_DRAW()
+    for i = 1, #BULLETS do
+        BULLETS[i]:draw()
+    end
+end
+
+function BULLETS_UPDATE(dt)
+    for i = 1, #BULLETS do
+        BULLETS[i]:update(dt)
+    end
+end
+
 --===================SPIKES=================================================
 function Spike:load(type, x, y, height, width)
     local instance = setmetatable({}, Spike)

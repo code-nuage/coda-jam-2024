@@ -32,6 +32,6 @@ CONFIG = {
         TILES = 32,
     },
     BULLET = {
-        SPEED = 96,
+        SPEED = 512,
     }
 }

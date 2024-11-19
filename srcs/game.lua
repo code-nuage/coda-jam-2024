@@ -25,6 +25,7 @@ function GAME:update(dt)
     HUMAN:update(dt)
     Player:shoot(dt)
     ROBOT:update(dt)
+    BULLETS_UPDATE(dt)
 end
 
 function GAME:draw()
@@ -38,5 +39,5 @@ function GAME:draw()
     PRESSURE_PLATE:draw()
     BEACON_TP:draw()
     PORTAL_FINISH:draw()
-    
+    BULLETS_DRAW()
 end

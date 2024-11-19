@@ -31,28 +31,7 @@ function Player:new(type, active_sprite, inactive_sprite, x, y, jump_count)
     return instance
 end
 --==============================Bullet_new===================================================
-function Bullet:new()
-    local instance = setmetatable({}, Bullet)
-    instance.x=(Player.shoot_direction_x)
-    instance.y=(Player.shoot_direction_y)
-    instance.dx=0
-    instance.dy=0
-    return instance
-end
-function Bullet:update(dt)
-    if self.x == 0 then
-        self.dx = self.speed
-    end
-    if self.x == -1 then
-        self.dx = -self.speed
-    end
-    if self.y == 0 then
-        self.dy = self.speed
-    end
-    if self.y == -1 then
-        self.dy = -self.speed
-    end
-end
+
 --===========================================Player_Update=========================================
 function Player:update(dt)
     if self.status == true then
@@ -91,7 +70,7 @@ function Player:update(dt)
 
             if self.shoot_direction_x ~= 0 or self.shoot_direction_y ~= 0 then
                 if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
-                    print("Shoot")
+                    BULLETS[#BULLETS + 1] = Bullet:new(self.x, self.y, self.shoot_direction_x, self.shoot_direction_y)
                 end
             end
         end
