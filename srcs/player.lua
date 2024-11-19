@@ -1,6 +1,5 @@
 Player = {}
-Bullet = {}
-Bullet.__index = Bullet
+
 Player.__index = Player
 --=================================Player_New=====================================================
 function Player:new(type, active_sprite, inactive_sprite, x, y, jump_count)
@@ -10,16 +9,18 @@ function Player:new(type, active_sprite, inactive_sprite, x, y, jump_count)
 
     instance.active_sprite = love.graphics.newImage(active_sprite)
     instance.inactive_sprite = love.graphics.newImage(inactive_sprite)
-    instance.defaultx = x
-    instance.defaulty = y
-    instance.x = x
-    instance.y = y
+    instance.defaultx = World.active.spawn[instance.type].x
+    instance.defaulty = World.active.spawn[instance.type].y
+    instance.x = instance.defaultx
+    instance.y = instance.defaulty
     instance.spawn = {x = 100, y = 100}
     instance.dy = 0
     instance.dx = 0
     instance.status = true
     instance.w = CONFIG.PLAYER.WIDTH
     instance.h = CONFIG.PLAYER.HEIGHT
+
+    instance.facing = "right"
 
     instance.jump_default = jump_count
     instance.jump_count = jump_count
@@ -40,9 +41,11 @@ function Player:update(dt)
     if self.status == true then
         if love.keyboard.isDown(CONFIG.INPUTS.LEFT) then
             self.dx = -self.speed
+            self.facing = "left"
         end
         if love.keyboard.isDown(CONFIG.INPUTS.RIGHT) then
             self.dx = self.speed
+            self.facing = "right"
         end
 
         if self.jump_count > 0 then
@@ -125,7 +128,12 @@ function Player:draw()
     love.graphics.rectangle("fill", self.x + self.w / 2 + 50 * self.shoot_direction_x,
         self.y + self.h / 2 + 50 * self.shoot_direction_y, 5, 5)
     if self.status == true then
-        love.graphics.draw(self.active_sprite, self.x, self.y, 0, 2, 2)
+        if self.facing == "right" then
+            love.graphics.draw(self.active_sprite, self.x, self.y, 0, 2, 2)
+        end
+        if self.facing == "left" then
+            love.graphics.draw(self.active_sprite, self.x + self.w, self.y, 0, -2, 2)
+        end
     else
         love.graphics.draw(self.inactive_sprite, self.x, self.y, 0, 2, 2)
     end

@@ -2,7 +2,6 @@ Bullet = {}
 BULLETS = {}
 
 Bullet.__index = Bullet
---===================BULLET===============================================
 
 function Bullet:new(x, y, dx, dy)
     local instance = setmetatable({}, Bullet)

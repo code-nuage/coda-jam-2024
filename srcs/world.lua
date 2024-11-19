@@ -2,13 +2,18 @@ World = {}
 World.__index = World
 
 World.active = nil
+World.tiles = {}
+
+for i = 1, 48 do
+    World.tiles[i] = love.graphics.newImage("assets/tiles/tile" .. i .. ".png")
+end
 
 function World:new(map)
     local instance = setmetatable({}, World)
     instance.world = bump.newWorld(32)
     instance.map = map.tiles
     instance.entities = map.entities
-
+    instance.spawn = map.spawn
 
     for y = 1, #instance.map do
         for x = 1, #instance.map[y] do
@@ -36,7 +41,7 @@ function World:draw()
     for y = 1, #self.map do
         for x = 1, #self.map[y] do
             if self.map[y][x] ~= 0 then
-                love.graphics.rectangle("fill", (x - 1) * CONFIG.WORLD.TILES, (y - 1) * CONFIG.WORLD.TILES, CONFIG.WORLD.TILES, CONFIG.WORLD.TILES)
+                love.graphics.draw(World.tiles[self.map[y][x]], (x - 1) * CONFIG.WORLD.TILES, (y - 1) * CONFIG.WORLD.TILES, 0, 2)
             end
         end
     end
