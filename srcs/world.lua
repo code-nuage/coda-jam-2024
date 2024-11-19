@@ -15,6 +15,8 @@ function World:new(map)
     instance.entities = map.entities
     instance.spawn = map.spawn
 
+    print(map.entities[1].id)
+
     for y = 1, #instance.map do
         for x = 1, #instance.map[y] do
             local block = {x, y}
@@ -26,7 +28,7 @@ function World:new(map)
     end
 
     for i = 1, #instance.entities do
-        local entity = {type = instance.entities[i].type, x = instance.entities[i].x, y = instance.entities[i].y}
+        local entity = {type = instance.entities[i].type, id = instance.entities[i].id, activate = instance.entities[i].activate, x = instance.entities[i].x, y = instance.entities[i].y}
         instance.world:add(entity, entity.x, entity.y, CONFIG.WORLD.TILES, CONFIG.WORLD.TILES)
     end
 
@@ -52,21 +54,32 @@ function World:draw()
 end
 
 function collisionFilter(i, other)
-    if i.type == "HUMAN" then
-        if other.type == "SPIKE" or other.type == "LASER" then
-            HUMAN:respawn()
-            ROBOT:respawn()
-        else
-            return "slide"
+    if i.type == "HUMAN" or i.type == "ROBOT" and other.activate == true then
+        if i.type == "HUMAN" then
+            if other.type == "SPIKE" then
+                HUMAN:respawn()
+                ROBOT:respawn()
+            elseif other.type == "PRESSURE_PLATE" then
+                if other.id == 1 then
+                    print("aaaa")
+                    for i = 1, #World.active.entities do
+                        if World.active.entities[i].id == 1 and World.active.entities[i].type == "SPIKE" then
+                            World.active.entities[i].activate = false
+                        end
+                    end
+                end
+            elseif other.type == "PORTAL" then
+                print("Victoire")
+                return "cross"
+            else
+                return "slide"
+            end
         end
-    elseif i.type == "ROBOT" then
-        if other.type == "SPIKE" then
-            HUMAN:respawn()
-            ROBOT:respawn()
-        elseif other.type == "LASER" then
-            return "cross"
-        else
-            return "slide"
+        if i.type == "ROBOT" then
+            if other.type == "SPIKE" and other.activate == true then
+                HUMAN:respawn()
+                ROBOT:respawn()
+            end
         end
     else
         return "slide"

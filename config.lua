@@ -16,7 +16,7 @@ CONFIG = {
     PLAYER = {
         WIDTH = 32,
         HEIGHT = 32,
-        SPEED = 64,
+        SPEED = 96,
         JUMPFORCE = 210,
         GRAVITY = 256,
     },
