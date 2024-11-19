@@ -6,16 +6,23 @@ World.active = nil
 function World:new(map)
     local instance = setmetatable({}, World)
     instance.world = bump.newWorld(32)
-    instance.map = map
+    instance.map = map.tiles
+    instance.entities = map.entities
 
-    for y = 1, #map do
-        for x = 1, #map[y] do
+
+    for y = 1, #instance.map do
+        for x = 1, #instance.map[y] do
             local block = {x, y}
 
-            if map[y][x] ~= 0 then
+            if instance.map[y][x] ~= 0 then
                 instance.world:add(block, (x - 1) * CONFIG.WORLD.TILES, (y - 1) * CONFIG.WORLD.TILES, CONFIG.WORLD.TILES, CONFIG.WORLD.TILES)
             end
         end
+    end
+
+    for i = 1, #instance.entities do
+        local entity = {type = instance.entities[i].type, x = instance.entities[i].x, y = instance.entities[i].y}
+        instance.world:add(entity, entity.x, entity.y, CONFIG.WORLD.TILES, CONFIG.WORLD.TILES)
     end
 
     return instance
@@ -32,6 +39,10 @@ function World:draw()
                 love.graphics.rectangle("fill", (x - 1) * CONFIG.WORLD.TILES, (y - 1) * CONFIG.WORLD.TILES, CONFIG.WORLD.TILES, CONFIG.WORLD.TILES)
             end
         end
+    end
+
+    for i = 1, #self.entities do
+        self.entities[i]:draw()
     end
 end
 

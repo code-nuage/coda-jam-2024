@@ -1,8 +1,9 @@
 require("config")
-require("srcs/maps")
 require("srcs/world")
-require("srcs/player")
 require("srcs/entities")
+require("srcs/maps")
+require("srcs/bullets")
+require("srcs/player")
 require("srcs/ui")
 
 GAME = {}
@@ -28,5 +29,4 @@ function GAME:draw()
     ROBOT:draw()
     TUTORIAL.active:draw()
     BULLETS_DRAW()
-    ENTITIES_DRAW()
 end
