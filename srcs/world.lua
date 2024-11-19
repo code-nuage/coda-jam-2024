@@ -4,6 +4,7 @@ World.__index = World
 World.active = nil
 World.tiles = {}
 
+
 for i = 1, 48 do
     World.tiles[i] = love.graphics.newImage("assets/tiles/tile" .. i .. ".png")
 end
