@@ -5,7 +5,7 @@ Entity.__index = Entity
 --================NORMAL ENTITY===================
 function Entity:new(type, x, y, w, h)
     local instance = setmetatable({}, Entity)
-    
+
     instance.type = type
 
     instance.x = x
@@ -13,14 +13,21 @@ function Entity:new(type, x, y, w, h)
     instance.w = w
     instance.h = h
 
-    ENTITIES[#ENTITIES+1] = instance
+    ENTITIES[#ENTITIES + 1] = instance
 
     if type == "SPIKE" then
         instance.image = love.graphics.newImage("assets/entities/spike.png")
-    elseif type == "LASER" then
-        instance.image = love.graphics.newImage("assets/entities/laser.png")
+    --[[elseif type == "LASER" then
+        instance.image = love.graphics.newImage("assets/entities/laser_top.png")
+    elseif type == "DOOR" then
+        instance.image = love.graphics.newImage("assets/entities/door.png")
+    elseif type == "BUTTON" then
+        instance.image = love.graphics.newImage("assets/entities/button.png")
+    elseif type == "PRESSURE_PLATE" then
+        instance.image = love.graphics.newImage("assets/entities/pressure_plate.png")
+    elseif type == "PORTAL" then
+        instance.image = love.graphics.newImage("assets/entities/portal.png")]]
     end
-
     return instance
 end
 

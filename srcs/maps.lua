@@ -1,8 +1,17 @@
 MAPS = {
     TUTORIAL = {
         entities = {
-            Entity:new("SPIKE", 32 * 20, 32 * 9, 32, 32),
+            Entity:new("SPIKE", 32 * 20, 32 * 9, 32, 32),--type, x, y, w, h
             Entity:new("SPIKE", 32 * 21, 32 * 9, 32, 32),
+            --[[Entity:new("PRESSURE_PLATE", 32 * 5, 32 * 10, 32, 32),
+            Entity:new("PRESSURE_PLATE", 32 * 24, 32 * 5, 32, 32),
+            Entity:new("DOOR", 32 * 14, 32 * 14, 32, 32),
+            Entity:new("BUTTON", 32 * 27, 32 * 14, 32, 32),
+            Entity:new("LASER", 32 * 34, 32 * 14, 32, 32),
+            Entity:new("¨PORTAL", 32 * 39, 32*22, 32, 32),
+            
+            ]]
+            
         },
         spawn = {
             ROBOT = {x = 96, y = 704},
