@@ -10,8 +10,11 @@ function Player:new(type, active_sprite, inactive_sprite, x, y, jump_count)
 
     instance.active_sprite = love.graphics.newImage(active_sprite)
     instance.inactive_sprite = love.graphics.newImage(inactive_sprite)
+    instance.defaultx = x
+    instance.defaulty = y
     instance.x = x
     instance.y = y
+    instance.spawn = {x = 100, y = 100}
     instance.dy = 0
     instance.dx = 0
     instance.status = true
@@ -26,11 +29,11 @@ function Player:new(type, active_sprite, inactive_sprite, x, y, jump_count)
     instance.gravity = CONFIG.PLAYER.GRAVITY
     instance.shoot_direction_x = 0
     instance.shoot_direction_y = 0
+    instance.hasshoot = false
 
     World.active.world:add(instance, instance.x, instance.y, instance.w, instance.h)
     return instance
 end
---==============================Bullet_new===================================================
 
 --===========================================Player_Update=========================================
 function Player:update(dt)
@@ -44,7 +47,7 @@ function Player:update(dt)
 
         if self.jump_count > 0 then
             if love.keyboard.isDown(CONFIG.INPUTS.JUMP) then
-                if love.keyboard.isDown(CONFIG.INPUTS.JUMP) and self.has_jumped == false then
+                if love.keyboard.isDown(CONFIG.INPUTS.JUMP) and not self.has_jumped then
                     self.dy = -self.force
                     self.jump_count = self.jump_count - 1
                     self.has_jumped = true
@@ -70,13 +73,20 @@ function Player:update(dt)
 
             if self.shoot_direction_x ~= 0 or self.shoot_direction_y ~= 0 then
                 if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) then
-                    BULLETS[#BULLETS + 1] = Bullet:new(self.x, self.y, self.shoot_direction_x, self.shoot_direction_y)
+                    if love.keyboard.isDown(CONFIG.INPUTS.SHOOT) and not self.hasshoot then
+                        BULLETS[#BULLETS + 1] = Bullet:new(self.x, self.y, self.shoot_direction_x, self.shoot_direction_y)
+                        self.hasshoot = true
+                    end
+                else
+                    self.hasshoot = false
                 end
             end
         end
     end
     --================================colision=============================================================
-    self.x, self.y = World.active.world:move(self, self.x + self.dx * dt, self.y + self.dy * dt)
+    self.x, self.y = World.active.world:move(self, self.x + self.dx * dt, self.y + self.dy * dt, collisionFilter)
+    World.active.world:check(self, self.x + CONFIG.JUSTABIT, self.y + CONFIG.JUSTABIT, collisionFilter)
+
 
     if self:isGrounded() then
         self.jump_count = self.jump_default
@@ -110,10 +120,6 @@ function Player:isTopped()
     end
 end
 
---====================================Player_Shoot=================================================
-function Player:shoot(dt)
-    --if love.keyboard.isDown(CONTROL.INPUTS.SHOOT) then
-end
 --=====================================Player_Draw====================================================
 function Player:draw()
     love.graphics.rectangle("fill", self.x + self.w / 2 + 50 * self.shoot_direction_x,
@@ -141,6 +147,10 @@ function love.keypressed(key)
     end
 end
 
-function Player:is_dead()
 
+function Player:respawn()
+    World.active.world:remove(self, self.x, self.y, self.w, self.h)
+    self.dx, self.dy = 0, 0
+    self.x, self.y = self.defaultx, self.defaulty
+    World.active.world:add(self, self.x, self.y, self.w, self.h)
 end

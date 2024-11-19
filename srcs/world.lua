@@ -34,3 +34,25 @@ function World:draw()
         end
     end
 end
+
+function collisionFilter(i, other)
+    if i.type == "HUMAN" then
+        if other.type == "SPIKE" or other.type == "LASER" then
+            HUMAN:respawn()
+            ROBOT:respawn()
+        else
+            return "slide"
+        end
+    elseif i.type == "ROBOT" then
+        if other.type == "SPIKE" then
+            HUMAN:respawn()
+            ROBOT:respawn()
+        elseif other.type == "LASER" then
+            return "cross"
+        else
+            return "slide"
+        end
+    else
+        return "slide"
+    end
+end

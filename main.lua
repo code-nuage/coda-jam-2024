@@ -11,6 +11,7 @@
 ]]
 
 bump = require("libs/bump")
+anim8 = require("libs/anim8")
 
 love.graphics.setDefaultFilter("nearest", "nearest")
 
