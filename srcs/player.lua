@@ -1,6 +1,4 @@
 Player = {}
-Bullet = {}
-Bullet.__index = Bullet
 Player.__index = Player
 --=================================Player_New=====================================================
 function Player:new(type, active_sprite, inactive_sprite, x, y, jump_count)
